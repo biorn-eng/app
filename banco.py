@@ -19,22 +19,13 @@ def criar_banco():
         )
     ''')
 
-    # Tabela de Projetos 
+    # Tabela de Projetos
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS projetos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome_projeto TEXT UNIQUE NOT NULL,
             definicao_projeto TEXT,
-            codigo_obra TEXT,
-            numeracao TEXT,
-            instalacao TEXT,
-            descricao TEXT,
-            justificativa TEXT,
-            categoria TEXT,
-            data_aquisicao TEXT,
-            localizacao TEXT,
-            vida_util TEXT,
-            observacoes TEXT
+            codigo_obra TEXT
         )
     ''')
 
@@ -67,17 +58,6 @@ def criar_banco():
             projeto_id INTEGER NOT NULL,
             FOREIGN KEY (contrato_id) REFERENCES contratos(id) ON DELETE CASCADE,
             FOREIGN KEY (projeto_id) REFERENCES projetos(id) ON DELETE CASCADE
-        )
-    ''')
-
-    # Relacionamento entre Contratos e Itens
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS contrato_itens (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            contrato_id INTEGER NOT NULL,
-            numeracao_item TEXT NOT NULL,
-            FOREIGN KEY (contrato_id) REFERENCES contratos(id) ON DELETE CASCADE,
-            FOREIGN KEY (numeracao_item) REFERENCES itens(numeracao) ON DELETE CASCADE
         )
     ''')
 

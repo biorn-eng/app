@@ -1,6 +1,6 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
 import sqlite3
+import tkinter as tk
+from tkinter import ttk
 
 def criar_aba_consultas(notebook):
     aba_consultas = ttk.Frame(notebook)
@@ -53,7 +53,7 @@ def buscar_dados(tree, instalacao="", projeto="", contrato=""):
     conn = sqlite3.connect("sistema.db")
     cursor = conn.cursor()
 
-    # Consulta SQL: todos os itens sejam exibidos com os dados dos projetos e contratos
+    # Consulta SQL para exibir corretamente a relação entre projetos, contratos e itens
     query = """
         SELECT i.numeracao, i.instalacao, i.descricao,
                p.nome_projeto, p.codigo_obra, p.definicao_projeto,
@@ -61,30 +61,28 @@ def buscar_dados(tree, instalacao="", projeto="", contrato=""):
         FROM itens i
         LEFT JOIN projeto_itens pi ON i.numeracao = pi.numeracao_item
         LEFT JOIN projetos p ON pi.projeto_id = p.id
-        LEFT JOIN contrato_itens ci ON i.numeracao = ci.numeracao_item
-        LEFT JOIN contratos c ON ci.contrato_id = c.id
+        LEFT JOIN contrato_projetos cp ON p.id = cp.projeto_id
+        LEFT JOIN contratos c ON cp.contrato_id = c.id
     """
 
     # Condições de filtragem
     params = []
+    conditions = []
 
     if instalacao:
-        query += " WHERE i.instalacao LIKE ?"
+        conditions.append("i.instalacao LIKE ?")
         params.append(f"%{instalacao}%")
     
     if projeto:
-        if params:
-            query += " AND p.nome_projeto LIKE ?"
-        else:
-            query += " WHERE p.nome_projeto LIKE ?"
+        conditions.append("p.nome_projeto LIKE ?")
         params.append(f"%{projeto}%")
 
     if contrato:
-        if params:
-            query += " AND c.codigo_contrato LIKE ?"
-        else:
-            query += " WHERE c.codigo_contrato LIKE ?"
+        conditions.append("c.codigo_contrato LIKE ?")
         params.append(f"%{contrato}%")
+
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
 
     cursor.execute(query, params)
     resultados = cursor.fetchall()
@@ -96,4 +94,3 @@ def buscar_dados(tree, instalacao="", projeto="", contrato=""):
         tree.insert("", "end", values=row)
 
     conn.close()
-
