@@ -46,14 +46,14 @@ def criar_aba_consultas(notebook):
     buscar_dados(tree)
 
 def buscar_dados(tree, instalacao="", projeto="", contrato=""):
-    """Busca dados corretamente relacionados a projetos e contratos"""
+    """Busca dados relacionados a projetos e contratos"""
     for item in tree.get_children():
         tree.delete(item)
 
     conn = sqlite3.connect("sistema.db")
     cursor = conn.cursor()
 
-    # Consulta SQL corrigida para garantir que todos os itens sejam exibidos com os dados dos projetos e contratos
+    # Consulta SQL: todos os itens sejam exibidos com os dados dos projetos e contratos
     query = """
         SELECT i.numeracao, i.instalacao, i.descricao,
                p.nome_projeto, p.codigo_obra, p.definicao_projeto,
@@ -89,7 +89,7 @@ def buscar_dados(tree, instalacao="", projeto="", contrato=""):
     cursor.execute(query, params)
     resultados = cursor.fetchall()
 
-    # Depuração: Exibir os resultados no terminal
+    # Depuração
     print("Resultados encontrados:", resultados)
 
     for row in resultados:

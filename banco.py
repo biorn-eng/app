@@ -19,7 +19,7 @@ def criar_banco():
         )
     ''')
 
-    # Tabela de Projetos (com os novos campos de definição do projeto e código da obra)
+    # Tabela de Projetos 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS projetos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,7 +49,7 @@ def criar_banco():
         )
     ''')
 
-    # Tabela de Contratos (com as novas colunas)
+    # Tabela de Contratos
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS contratos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

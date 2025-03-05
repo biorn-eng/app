@@ -15,7 +15,7 @@ def criar_aba_contratos(notebook):
     frame_tabela = tk.Frame(aba_contratos)
     frame_tabela.pack(fill="both", expand=True, padx=10, pady=10)
 
-    # Atualizando a lista de colunas para incluir o tipo de contrato
+    # lista de colunas para incluir o tipo de contrato
     colunas = ("ID", "Nome", "Código", "Descrição", "Tipo de Contrato")
     tree = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
 
@@ -55,7 +55,7 @@ def abrir_janela_novo_plano(tree):
     frame_tabela = ttk.Frame(janela_novo)
     frame_tabela.pack(pady=10, fill=tk.BOTH, expand=True)
 
-    # Ajustando as colunas para mostrar todas as colunas de projeto e item
+    # mostrar todas as colunas de projetos
     colunas = ("Selecionado", "ID", "Nome do Projeto", "Definição do Projeto", "Código da Obra", "Item", "Instalação", 
                "Descrição do Item", "Justificativa", "Categoria", "Data Aquisição", "Localização", "Vida Útil", "Observações")
     tree_itens = ttk.Treeview(frame_tabela, columns=colunas, show="headings")
